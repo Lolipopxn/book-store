@@ -4,7 +4,6 @@ import Category from './models/Category'
 import Book from './models/Book'
 import BookDetail from './components/BookDetail'
 
-
 function App() {
   const [categoryList, setCategoryList] = useState<Category[]>([])
   const [bookList, setBookList] = useState<Book[]>([])
