@@ -1,48 +1,33 @@
 import Book from "../models/Book";
 import { IRepository } from "./IRepository";
+import config from "../config";
+import axios from 'axios';
 
 export class BookRepository implements IRepository<Book> {
+    urlPrefix = config.remoteRepositoryUrlPrefix
+
     async getAll(): Promise<Book[] | null> {
-
-        return[
-            {
-                id: 1, title: 'Harry Potter', price: 560, stockAmount: 10,
-                category: { id: 1, title: 'Fantasy'}
-            }
-
-        ]
+        const result = await axios.get<Book[]>(`${this.urlPrefix}/book`)
+        return result.data
     }
     async get(id: number|string): Promise<Book | null>{
-        const result = {
-            id: 1, title: 'Harry Potter', price: 560, stockAmount: 10,
-            category: { id: 1, title: 'Fantasy'}
-        }
-        
-        return result
-      }
+        const result = await axios.get<Book>(`${this.urlPrefix}/book/${id}`)
+        return result.data
+    }
     
       async create(entity: Partial<Book>): Promise<void>{
-        const result = {
-            id: 1, title: 'Harry Potter', price: 560, stockAmount: 10,
-            category: { id: 1, title: 'Fantasy'}
-        } 
-        console.log(result)
+        const result = await axios.get<Book>(`${this.urlPrefix}/book/,entity`)
+        console.log(result.data)
       }
     
       async update(entity: Partial<Book>): Promise<void>{
-        const result = {
-            id: 1, title: 'Harry Potter', price: 560, stockAmount: 10,
-            category: { id: 1, title: 'Fantasy'}
-        } 
-
-        console.log(result)
+        const result = await axios.get<Book>(`${this.urlPrefix}/book/,entity`)
+        console.log(result.data)
       }
     
       async delete(id: number|string): Promise<void>{
-        const result = {
-            id: 1, title: 'Harry Potter', price: 560, stockAmount: 10,
-            category: { id: 1, title: 'Fantasy'}
-        }
-        console.log(result)
+        const result = await axios.get<Book>(`${this.urlPrefix}/book/${id}`)
+        
+        console.log(result.data)
       }
 }

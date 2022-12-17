@@ -32,11 +32,13 @@ function App() {
     <div>
         <div>
           {categoryList.map(category => <option key={category.id} value={category.id}>{category.title}</option>)}
+          <hr />
         </div>
-        {bookList.map(book =>
-        <div key={book.id}>
-          <BookDetail {...book} />
-        </div> 
+            {bookList.map(book =>
+            <div key={book.id}>
+            <BookDetail {...book} />
+            <hr />
+          </div> 
         )}
     </div>
   );
