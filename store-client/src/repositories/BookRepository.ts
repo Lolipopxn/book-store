@@ -23,17 +23,17 @@ export class BookRepository implements IRepository<Book> {
     }
     
       async create(entity: Partial<Book>): Promise<void>{
-        const result = await axios.get<Book>(`${this.urlPrefix}/book/,entity`)
+        const result = await axios.post<Book>(`${this.urlPrefix}/book/`,entity)
         console.log(result.data)
       }
     
       async update(entity: Partial<Book>): Promise<void>{
-        const result = await axios.get<Book>(`${this.urlPrefix}/book/,entity`)
+        const result = await axios.put<Book>(`${this.urlPrefix}/book/${entity.id}`,entity)
         console.log(result.data)
       }
     
       async delete(id: number|string): Promise<void>{
-        const result = await axios.get<Book>(`${this.urlPrefix}/book/${id}`)
+        const result = await axios.delete<Book>(`${this.urlPrefix}/book/${id}`)
         
         console.log(result.data)
       }

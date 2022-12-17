@@ -1,10 +1,11 @@
-import { useRef } from "react";
+import { FormEvent, useRef } from "react";
 import Book from "../models/Book";
 import Category from "../models/Category";
 
 interface Props {
   book: Partial<Book>,
   categoryList: Category[],
+  callbackFn: (book: Partial<Book>) => void
 }
 
 function BookForm(props: Props) {
@@ -13,16 +14,29 @@ function BookForm(props: Props) {
   const stockAmountRef = useRef<HTMLInputElement>(null)
   const categoryRef = useRef<HTMLSelectElement>(null)
 
-
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    props.callbackFn({
+      id: props.book.id,
+      title: titleRef.current?.value,
+      price: Number(priceRef.current?.value),
+      stockAmount: Number(stockAmountRef.current?.value),
+      category: {
+        id: Number(categoryRef.current?.value)
+      }
+    })
+  }
   return (
     <div>
-        <div>
-          Title : <input type="text" defaultValue={props.book.title} ref={titleRef} required/>
+      <form onSubmit={onSubmit}>
+        <div className="form_detail">
+          Title : <input type="text" pattern="^((?:\s*[A-Za-z0-9]\s*){5,})$" title="Title should have at least 5 characters." 
+          defaultValue={props.book.title} ref={titleRef} required/>
         </div>
-        <div>
+        <div className="form_detail">
           Price : <input type="number" step="0.01" min="0" defaultValue={props.book.price} ref={priceRef} />
         </div>
-        <div>
+        <div className="form_detail">
           Stock Amount : <input type="number" min="0" defaultValue={props.book.stockAmount} ref={stockAmountRef} />
         </div>
         <div>
@@ -32,6 +46,8 @@ function BookForm(props: Props) {
             {props.categoryList.map(category => <option key={category.id} value={category.id}>{category.title}</option>)}
           </select>
         </div>
+        <button type="submit">Submit</button>
+      </form>
     </div>
 
   );
