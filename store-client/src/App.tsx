@@ -3,6 +3,7 @@ import Repo from './repositories'
 import Category from './models/Category'
 import Book from './models/Book'
 import BookDetail from './components/BookDetail'
+import BookForm from './components/BookForm';
 
 function App() {
   const [categoryList, setCategoryList] = useState<Category[]>([])
@@ -40,6 +41,7 @@ function App() {
             {bookList.map(book =>
             <div key={book.id}>
             <BookDetail {...book} />
+            <BookForm book={book} categoryList={categoryList}/>
             <hr />
           </div> 
         )}
